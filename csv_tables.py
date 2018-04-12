@@ -1,10 +1,9 @@
 import os
 import csv
 
-
-HTML_PATH = './programs/graphic-design.htm'
+HTML_PATH = './programs/graphic-designNoneSem.htm'
 CSV_FILES = ('./_assets/first_semester.csv',
-                './assets/second_semester.csv')
+             './_assets/second_semester.csv')
 
 SP_INC = 2
 
@@ -24,7 +23,7 @@ def create_row(row_data, **kwargs):
         # look at the first column of the row and separate the course number form the name
         # and make the course number bold
         first_col = row_data[0].split(' ', 1)
-        output += sp + '<td><strong>' + first_col[0] + '</strong>' + first_col[1] + '</td>\n'
+        output += sp + '<td><strong>' + first_col[0] + ' </strong>' + first_col[1] + '</td>\n'
         for item in row_data[1:]:
             output += sp + '<td>' + item + '</td>\n'
 
@@ -40,7 +39,7 @@ def create_table(csv_data, **kwargs):
     cellpadding = str(kwargs.get('cellpadding', 0))
     # have leading spaces
     sp = ' ' * kwargs.get('line_space', 0)
-    output = sp + '<table border="' + border + '" cellspacing"' + cellspacing + '" cellpadding"' + cellpadding + '">\n'
+    output = sp + '<table border="' + border + '" cellspacing="' + cellspacing + '" cellpadding"' + cellpadding + '">\n'
     sp += SP_INC * ' '
     # make the first row a header
     output += create_row(csv_data[0], line_space = len(sp), is_header = True)
@@ -59,25 +58,26 @@ def insert_csv(html_path, csv_paths):
     # table. html_halves is a list of two strings.
     html_halves = html_origin.read().split('</article>')
     # find out the number of spaces before the article tag
-    sp = (len(html_halves[0] - len(html_halves[0].rstrip(' ')))
+    sp = (len(html_halves[0]) - len(html_halves[0].rstrip(' ')))
 
-    new_table = ''
+    new_table = ""
+
     for path in csv_paths:
         print('Building table from' + path)
         file = open(path, 'r')
-        # create a list of lists with the outer row the list of rows that was turned into a list from a generator.
-        # The inner list is the lisf of row specific elements
-        # The inner list is created by creating a list of strings by splitting the row elements by the comma.
-        # Thus there are 2 elements in the inner list(the name of the course and the number of credits)
+    # create a list of lists with the outer row the list of rows that was turned into a list from a generator.
+    # The inner list is the lisf of row specific elements
+    # The inner list is created by creating a list of strings by splitting the row elements by the comma.
+    # Thus there are 2 elements in the inner list(the name of the course and the number of credits)
         csv_data = list(csv.reader(file, delimiter=','))
-        #return a string, which consists of html elements
+    # return a string, which consists of html elements
         new_table += create_table(csv_data, line_space = sp + 2)
 
     print('Inserting tables into copy of ' + html_path)
     output_html = html_halves[0].rstrip(' ') + new_table + (sp * ' ') + '</article>' + html_halves[1]
-    output_path = os.path.dirname(html_path) + '/output.htm'
+    output_path = os.path.dirname(html_path) + '/Output_with_1&2_Semesters.htm'
     print('Saving result to ' + output_path)
     output_file = open(output_path, 'w')
     output_file.write(output_html)
 
-if __main__=="__main__": insert_csv(HTML_PATH, CSV_FILES)
+if __name__=="__main__": insert_csv(HTML_PATH, CSV_FILES)
