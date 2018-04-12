@@ -21,3 +21,5 @@ In the terminal, change directory to be located inside the repository. Type the 
 ```
 python csv_tables.py
 ```
+
+The output webpage with the newly inserted and formatted data tables are located in the "programs" folder.
