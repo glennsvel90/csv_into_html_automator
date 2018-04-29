@@ -8,6 +8,7 @@ CSV_FILES = ('./_assets/first_semester.csv',
 SP_INC = 2
 
 def create_row(row_data, **kwargs):
+    """ create the table rows """
 
     # have leading spaces
     sp = ' ' * kwargs.get('line_space', 0)
@@ -32,8 +33,11 @@ def create_row(row_data, **kwargs):
 
 
 def create_table(csv_data, **kwargs):
-    """ helper function to generate table tags by using a list of list dealing with
-    csv data as one of its arguements """
+    """ 
+    helper function to generate table tags by using a list of list dealing with
+    csv data as one of its arguements
+    """
+    
     border = str(kwargs.get('border', 0))
     cellspacing = str(kwargs.get('cellspacing', 0))
     cellpadding = str(kwargs.get('cellpadding', 0))
@@ -51,8 +55,10 @@ def create_table(csv_data, **kwargs):
 
 
 def insert_csv(html_path, csv_paths):
-    """ reads CSV files; generates html tables from the data  and insert tables into the webpage and saves
-    the new webpage to output.htm """
+    """ 
+    reads CSV files; generates html tables from the data  and insert tables into the webpage and saves
+    the new webpage to output.htm 
+    """
     html_origin = open(html_path)
     # read returns a string of the html. This string is cut in half where we should insert the
     # table. html_halves is a list of two strings.
